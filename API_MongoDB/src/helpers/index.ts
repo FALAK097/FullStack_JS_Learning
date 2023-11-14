@@ -1,11 +1,11 @@
+import * as dotenv from 'dotenv';
+dotenv.config({ path: './src/.env' });
 import crypto from 'crypto';
-
-const SECRET = 'FALAK-REST-API';
 
 export const authentication = (salt: string, password: string): string => {
   return crypto
     .createHmac('sha256', [salt, password].join('/'))
-    .update(SECRET)
+    .update(process.env.SECRET)
     .digest('hex');
 };
 
