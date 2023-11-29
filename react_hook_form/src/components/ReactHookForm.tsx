@@ -15,10 +15,20 @@ type FormValues = {
   phNumbers: {
     number: string;
   }[];
+  age: number;
+  dob: Date;
 };
 
 export const ReactHookForm = () => {
-  const { register, control, handleSubmit, formState } = useForm<FormValues>({
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState,
+    watch,
+    getValues,
+    setValue,
+  } = useForm<FormValues>({
     // use of default values
     defaultValues: {
       username: 'Falak009',
@@ -36,6 +46,8 @@ export const ReactHookForm = () => {
           number: '',
         },
       ],
+      age: 0,
+      dob: new Date(),
     },
 
     // load saved data from API endpoint
@@ -59,15 +71,34 @@ export const ReactHookForm = () => {
     control,
   });
 
+  // watch field values
+  const watchUser = watch(['username', 'email']);
+
   const onSubmit = (data: FormValues) => {
     console.log('Form Submitted', data);
+  };
+
+  const handleGetValues = () => {
+    console.log('Get value: ', getValues());
+    // to get specific value
+    console.log('Get value: ', getValues('username'));
+    // to get array of values
+    console.log('Get value: ', getValues(['username', 'email']));
+  };
+
+  const handleSetValue = () => {
+    setValue('username', '', {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
   };
 
   renderCount++;
   return (
     <div>
       <h1>React Hook Form ({renderCount / 2}) </h1>
-
+      <h2>Watch User: {watchUser} </h2>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <div className="form-control">
           <label htmlFor="username">Username</label>
@@ -224,7 +255,45 @@ export const ReactHookForm = () => {
             </div>
           </div>
         </div>
+
+        <div className="form-control">
+          <label htmlFor="age">Age</label>
+          <input
+            type="number"
+            id="age"
+            {...register('age', {
+              valueAsNumber: true,
+              required: {
+                value: true,
+                message: 'Age is required',
+              },
+            })}
+          />
+          <p className="error"> {errors.age?.message} </p>
+        </div>
+
+        <div className="form-control">
+          <label htmlFor="dob">Date of Birth</label>
+          <input
+            type="date"
+            id="dob"
+            {...register('dob', {
+              valueAsDate: true,
+              required: {
+                value: true,
+                message: 'Date is required',
+              },
+            })}
+          />
+          <p className="error"> {errors.dob?.message} </p>
+        </div>
         <button>Submit</button>
+        <button type="button" onClick={handleGetValues}>
+          Get Values
+        </button>
+        <button type="button" onClick={handleSetValue}>
+          Set Value
+        </button>
       </form>
       <DevTool control={control} />
     </div>
