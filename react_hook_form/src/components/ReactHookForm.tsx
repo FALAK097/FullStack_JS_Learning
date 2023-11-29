@@ -1,4 +1,4 @@
-import { useForm, useFieldArray } from 'react-hook-form';
+import { useForm, useFieldArray, FieldErrors } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 
 let renderCount = 0;
@@ -63,7 +63,9 @@ export const ReactHookForm = () => {
     //   };
     // },
   });
-  const { errors } = formState;
+  const { errors, touchedFields, dirtyFields, isDirty, isValid } = formState;
+
+  console.log(touchedFields, dirtyFields, isDirty, isValid);
 
   // useFieldArray
   const { fields, append, remove } = useFieldArray({
@@ -76,6 +78,10 @@ export const ReactHookForm = () => {
 
   const onSubmit = (data: FormValues) => {
     console.log('Form Submitted', data);
+  };
+
+  const onError = (errors: FieldErrors<FormValues>) => {
+    console.log('Form errors: ', errors);
   };
 
   const handleGetValues = () => {
@@ -99,7 +105,7 @@ export const ReactHookForm = () => {
     <div>
       <h1>React Hook Form ({renderCount / 2}) </h1>
       <h2>Watch User: {watchUser} </h2>
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
         <div className="form-control">
           <label htmlFor="username">Username</label>
           <input
@@ -169,6 +175,9 @@ export const ReactHookForm = () => {
             type="text"
             id="twitter"
             {...register('social.twitter', {
+              disabled: true,
+              // dynamically disable field
+              // disabled: watch('channel') === '',
               required: {
                 value: true,
                 message: 'Enter your twitter Account Name',
@@ -287,7 +296,7 @@ export const ReactHookForm = () => {
           />
           <p className="error"> {errors.dob?.message} </p>
         </div>
-        <button>Submit</button>
+        <button disabled={!isDirty || !isValid}>Submit</button>
         <button type="button" onClick={handleGetValues}>
           Get Values
         </button>
