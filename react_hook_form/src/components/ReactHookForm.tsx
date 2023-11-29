@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useForm, useFieldArray, FieldErrors } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 
@@ -28,6 +29,8 @@ export const ReactHookForm = () => {
     watch,
     getValues,
     setValue,
+    reset,
+    trigger,
   } = useForm<FormValues>({
     // use of default values
     defaultValues: {
@@ -49,6 +52,12 @@ export const ReactHookForm = () => {
       age: 0,
       dob: new Date(),
     },
+    // validation modes
+    mode: 'onBlur',
+    // mode: 'all', -- combination of onBlur and onChange
+    // mode: 'onChange',
+    // mode: 'onTouched'
+    // mode: 'onSubmit' -- default mode
 
     // load saved data from API endpoint
     // defaultValues: async () => {
@@ -63,7 +72,19 @@ export const ReactHookForm = () => {
     //   };
     // },
   });
-  const { errors, touchedFields, dirtyFields, isDirty, isValid } = formState;
+  const {
+    errors,
+    touchedFields,
+    dirtyFields,
+    isDirty,
+    isValid,
+    isSubmitting,
+    isSubmitted,
+    isSubmitSuccessful,
+    submitCount,
+  } = formState;
+
+  console.log({ isSubmitting, isSubmitted, isSubmitSuccessful, submitCount });
 
   console.log(touchedFields, dirtyFields, isDirty, isValid);
 
@@ -72,6 +93,12 @@ export const ReactHookForm = () => {
     name: 'phNumbers',
     control,
   });
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset();
+    }
+  }, [isSubmitSuccessful, reset]);
 
   // watch field values
   const watchUser = watch(['username', 'email']);
@@ -147,6 +174,13 @@ export const ReactHookForm = () => {
                     !fieldValue.endsWith('.in') ||
                     'This Domain is not supported'
                   );
+                },
+                emailAvailable: async (fieldValue) => {
+                  const response = await fetch(
+                    `https://jsonplaceholder.typicode.com/users?email=${fieldValue}`
+                  );
+                  const data = await response.json();
+                  return data.length === 0 || 'Email already exists';
                 },
               },
             })}
@@ -296,12 +330,18 @@ export const ReactHookForm = () => {
           />
           <p className="error"> {errors.dob?.message} </p>
         </div>
-        <button disabled={!isDirty || !isValid}>Submit</button>
+        <button disabled={!isDirty || !isValid || isSubmitting}>Submit</button>
+        <button type="button" onClick={() => reset()}>
+          Reset
+        </button>
         <button type="button" onClick={handleGetValues}>
           Get Values
         </button>
         <button type="button" onClick={handleSetValue}>
           Set Value
+        </button>
+        <button type="button" onClick={() => trigger()}>
+          Validate
         </button>
       </form>
       <DevTool control={control} />
