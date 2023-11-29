@@ -1,10 +1,16 @@
-import './App.css';
-import { ReactHookForm } from './components/ReactHookForm';
+// import './App.css';
+import { MuiReactHookForm } from './components/MuiReactHookForm';
+// import { ReactHookForm } from './components/ReactHookForm';
+// import { YupReactHookForm } from './components/YupReactHookForm';
+// import { ZodReactHookForm } from './components/ZodReactHookForm';
 
 function App() {
   return (
     <>
-      <ReactHookForm />
+      {/* <ReactHookForm /> */}
+      {/* <YupReactHookForm /> */}
+      {/* <ZodReactHookForm /> */}
+      <MuiReactHookForm />
     </>
   );
 }
