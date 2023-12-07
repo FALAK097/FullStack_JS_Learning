@@ -1,0 +1,65 @@
+<!-- Event Delegation
+Event delegation is a concept in web development where a single event listener is used to manage all related events for
+a particular type, rather than attaching individual event listeners to each element. Instead of attaching an event
+listener to each child element, you attach a single event listener to a common ancestor (usually a parent or the
+document). This single event listener then listens for events that bubble up from the child elements.
+
+The key advantage of event delegation is that it reduces the number of event listeners, which can lead to better
+performance, especially in situations where there are many elements. -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Delegation Example</title>
+    <style>
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            cursor: pointer;
+            margin: 5px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        li:hover {
+            background-color: #f0f0f0;
+        }
+
+        .selected {
+            background-color: #87CEEB;
+        }
+    </style>
+</head>
+
+<body>
+
+    <ul id="parentList">
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+        <li>Item 4</li>
+    </ul>
+
+    <script>
+        // Using event delegation to handle click events on list items
+        document.getElementById('parentList').addEventListener('click', function (event) {
+            if (event.target.tagName === 'LI') {
+                // Event target is an <li> element
+                console.log('Clicked on:', event.target.textContent);
+                event.target.classList.toggle('selected');
+
+                // Or navigate to a new page based on the clicked item
+                window.location.href = 'details.html?item=' + event.target.textContent.replace(/\s/g, '');
+            }
+        });
+    </script>
+
+</body>
+
+</html>
