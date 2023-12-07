@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debounced Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+
+        input {
+            width: 300px;
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 5px;
+            padding: 8px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Debounced Search</h1>
+    <input type="text" id="searchInput" placeholder="Type to search">
+    <ul id="searchResults"></ul>
+
+    <script>
+        const searchResults = document.getElementById('searchResults');
+        const searchInput = document.getElementById('searchInput');
+
+
+        function debounce(func, delay) {
+            let timeoutId;
+            return function (...args) {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => func.apply(this, args), delay);
+            };
+        }
+
+
+        const handleSearch = debounce(function () {
+            const query = searchInput.value.trim();
+
+            // Display the input value in the UI
+            searchResults.innerHTML = `<li>Search value: ${query}</li>`;
+
+            // Log the input value to the console
+            console.log('Search value:', query);
+        }, 300);
+
+        searchInput.addEventListener('input', handleSearch);
+    </script>
+
+</body>
+
+</html>
