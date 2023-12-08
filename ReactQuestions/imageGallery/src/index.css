@@ -1,0 +1,27 @@
+body {
+  background-color: #333;
+}
+
+.gallery-container {
+  text-align: center;
+  padding: 20px;
+  color: #ca0a0a;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.image-container {
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(5, 221, 95, 0.911);
+}
+
+img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
