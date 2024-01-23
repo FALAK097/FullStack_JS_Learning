@@ -1,4 +1,5 @@
-// Deep cloning an object means creating a new object with the same structure and values as the original, but without sharing any references to nested objects or arrays.
+// Deep cloning an object means creating a new object with the same structure and values as
+// the original, but without sharing any references to nested objects or arrays.
 
 function deepClone(obj) {
   var clonedObject = {};
