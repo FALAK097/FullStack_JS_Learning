@@ -1,0 +1,19 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.stars {
+  margin-top: 20px;
+  font-size: 40px;
+  cursor: pointer;
+}
+
+.selected {
+  color: #ffcc00;
+}
