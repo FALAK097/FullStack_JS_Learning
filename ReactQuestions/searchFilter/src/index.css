@@ -1,0 +1,24 @@
+.main {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.grid-main {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 20px;
+  padding: 10px;
+}
+
+.grid-child {
+  border: 1px solid #a7a7a7;
+}
+
+.search {
+  width: 40%;
+  height: 20px;
+  border-radius: 5px;
+  padding: 10px;
+  outline: none;
+  border: 1px solid #a7a7a7;
+}
