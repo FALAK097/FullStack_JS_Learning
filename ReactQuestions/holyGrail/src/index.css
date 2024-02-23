@@ -1,0 +1,49 @@
+* {
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  height: 75vh;
+}
+
+header,
+nav,
+footer,
+aside,
+main {
+  padding: 10px;
+  text-align: center;
+}
+
+header {
+  background-color: tomato;
+  height: 60px;
+}
+
+.columns {
+  display: flex;
+  flex-grow: 1;
+  height: auto;
+}
+
+nav {
+  background-color: lightcoral;
+  width: 20%;
+}
+
+main {
+  background-color: lightgray;
+  width: 60%;
+}
+
+aside {
+  background-color: lightgreen;
+  width: 20%;
+}
+
+footer {
+  background-color: lightblue;
+  height: 100px;
+}
